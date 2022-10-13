@@ -1,7 +1,7 @@
 #! /usr/bin/env bash
 
 function do_install(){
-    URL="https://raw.githubusercontent.com/Xenion1987/install-puppet-sh/main/install_puppet_5_agent.sh";
+    URL="https://raw.githubusercontent.com/Xenion1987/install-puppet-sh/main/install_puppet_${PUPPET_AGENT_VERSION}_agent.sh";
     if (curl -sLo - "${URL}" || wget --quiet -O - "${URL}") | sh; then
         configure
         systemctl enable --now puppet;
@@ -25,15 +25,12 @@ ENDOFCONFIG
 }
 
 function main() {
-    do_install
-    do_configure
-}
-
-function main() {
     if [[ -n "${1}" ]]; then
         case "${1}" in
         5|6|7)
             PUPPET_AGENT_VERSION=${1}
+            do_install
+            do_configure
             ;;
         *)
             echo -e "\nMissing or wrong option. Need one of 5, 6, 7"
