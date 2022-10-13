@@ -1,6 +1,7 @@
 #! /usr/bin/env bash
 
 function do_install(){
+    echo "Start of ${FUNCNAME[0]}"
     URL="https://raw.githubusercontent.com/Xenion1987/install-puppet-sh/main/install_puppet_${PUPPET_AGENT_VERSION}_agent.sh";
     if (curl -sLo - "${URL}" || wget --quiet -O - "${URL}") | sh; then
         configure
@@ -9,9 +10,11 @@ function do_install(){
         echo "Could not install puppet."
         exit 255 
     fi
+    echo "End of ${FUNCNAME[0]}"
 }
 
 function do_configure(){
+    echo "Start of ${FUNCNAME[0]}"
     PUPPET_CONFIG_PATH="/etc/puppetlabs/puppet/puppet.conf"
     cat << ENDOFCONFIG >> "${PUPPET_CONFIG_PATH}"
 ### ADDED BY PUPPET-INSTALL-SCRIPT ###
@@ -22,9 +25,11 @@ runinterval = 30m
 ### ### ### ### ### ### ### ### ### ###
 
 ENDOFCONFIG
+    echo "End of ${FUNCNAME[0]}"
 }
 
 function main() {
+    echo "Start of ${FUNCNAME[0]}"
     if [[ -n "${1}" ]]; then
         case "${1}" in
         5|6|7)
@@ -41,6 +46,7 @@ function main() {
         echo -e "\nMissing or wrong option. Need one of 5, 6, 7"
         exit 244
     fi
+    echo "End of ${FUNCNAME[0]}"
 }
 
 main "$@"
