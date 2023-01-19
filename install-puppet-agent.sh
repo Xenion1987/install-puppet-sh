@@ -4,7 +4,6 @@ function do_install(){
     echo "Start of ${FUNCNAME[0]}"
     URL="https://raw.githubusercontent.com/Xenion1987/install-puppet-sh/main/install_puppet_${PUPPET_AGENT_VERSION}_agent.sh";
     if (curl -sLo - "${URL}" || wget --quiet -O - "${URL}") | sh; then
-        configure
         systemctl enable --now puppet;
     else
         echo "Could not install puppet."
@@ -12,30 +11,13 @@ function do_install(){
     fi
     echo "End of ${FUNCNAME[0]}"
 }
-
-function do_configure(){
-    echo "Start of ${FUNCNAME[0]}"
-    PUPPET_CONFIG_PATH="/etc/puppetlabs/puppet/puppet.conf"
-    cat << ENDOFCONFIG >> "${PUPPET_CONFIG_PATH}"
-### ADDED BY PUPPET-INSTALL-SCRIPT ###
-server = puppet.mcs.dogado.net
-environment = useronly
-splay = true
-runinterval = 30m
-### ### ### ### ### ### ### ### ### ###
-
-ENDOFCONFIG
-    echo "End of ${FUNCNAME[0]}"
-}
-
 function main() {
     echo "Start of ${FUNCNAME[0]}"
     if [[ -n "${1}" ]]; then
         case "${1}" in
         5|6|7)
-            PUPPET_AGENT_VERSION=${1}
+            PUPPET_AGENT_VERSION=${1:-"6"}
             do_install
-            do_configure
             ;;
         *)
             echo -e "\nMissing or wrong option. Need one of 5, 6, 7"
