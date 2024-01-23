@@ -503,6 +503,7 @@ case $platform in
     "10") deb_codename="buster" ;;
     "11") deb_codename="bullseye" ;;
     "12") deb_codename="bookworm" ;;
+    "13") deb_codename="trixie" ;;
     esac
     filetype="deb"
     filename="puppet5-release-${deb_codename}.deb"
@@ -516,13 +517,15 @@ case $platform in
     "13.04") deb_codename="raring" ;;
     "13.10") deb_codename="saucy" ;;
     "14.04") deb_codename="trusty" ;;
+    "14.10") utopic ;;
     "15.04") deb_codename="vivid" ;;
     "15.10") deb_codename="wily" ;;
     "16.04") deb_codename="xenial" ;;
     "16.10") deb_codename="yakkety" ;;
     "17.04") deb_codename="zesty" ;;
     "18.04") deb_codename="bionic" ;;
-    "14.10") utopic ;;
+    "22.04") deb_codename="focal" ;;
+    "22.10") deb_codename="kinetic" ;;
     esac
     filetype="deb"
     filename="puppet5-release-${deb_codename}.deb"

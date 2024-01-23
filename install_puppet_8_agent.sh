@@ -51,7 +51,7 @@ utopic() {
 
 # Check whether a command exists - returns 0 if it does, 1 if it does not
 exists() {
-  if command -v $1 >/dev/null 2>&1; then
+  if command -v "${1}" >/dev/null 2>&1; then
     return 0
   else
     return 1
@@ -94,7 +94,7 @@ while getopts v:f:d:h opt; do
     ;;
   esac
 done
-shift $(expr $OPTIND - 1)
+shift $((OPTIND - 1))
 
 machine=$(uname -m)
 os=$(uname -s)
@@ -196,6 +196,16 @@ else
     report_bug
     exit 1
     ;;
+  6*)
+    critical "Cannot install Puppet 6 with this script, you need to use install_puppet_6_agent.sh"
+    report_bug
+    exit 1
+    ;;
+  7*)
+    critical "Cannot install Puppet 7 with this script, you need to use install_puppet_7_agent.sh"
+    report_bug
+    exit 1
+    ;;
   *)
     info "Version parameter defined: $version"
     ;;
@@ -210,17 +220,10 @@ case $platform in
   platform_version=$major_version
   ;;
 "fedora")
-  case $major_version in
-  "23") platform_version="22" ;;
-  *) platform_version=$major_version ;;
-  esac
+  platform_version=$major_version
   ;;
 "debian")
-  case $major_version in
-  "5") platform_version="6" ;;
-  "6") platform_version="6" ;;
-  "7") platform_version="6" ;;
-  esac
+  platform_version=$major_version
   ;;
 "freebsd")
   platform_version=$major_version
@@ -488,54 +491,37 @@ case $platform in
   "el")
     info "Red hat like platform! Lets get you an RPM..."
     filetype="rpm"
-    filename="puppet6-release-el-${platform_version}.noarch.rpm"
+    filename="puppet8-release-el-${platform_version}.noarch.rpm"
     download_url="http://yum.puppetlabs.com/${filename}"
     ;;
   "fedora")
     info "Fedora platform! Lets get the RPM..."
     filetype="rpm"
-    filename="puppet6-release-fedora-${platform_version}.noarch.rpm"
+    filename="puppet8-release-fedora-${platform_version}.noarch.rpm"
     download_url="http://yum.puppetlabs.com/${filename}"
     ;;
   "debian")
     info "Debian platform! Lets get you a DEB..."
     case $major_version in
-    "5") deb_codename="lenny" ;;
-    "6") deb_codename="squeeze" ;;
-    "7") deb_codename="wheezy" ;;
-    "8") deb_codename="jessie" ;;
-    "9") deb_codename="stretch" ;;
     "10") deb_codename="buster" ;;
     "11") deb_codename="bullseye" ;;
     "12") deb_codename="bullseye" ;; # Workaround since there is no 'bookworm' package
     "13") deb_codename="bullseye" ;; # Workaround since there is no 'trixie' package
     esac
     filetype="deb"
-    filename="puppet6-release-${deb_codename}.deb"
+    filename="puppet8-release-${deb_codename}.deb"
     download_url="http://apt.puppetlabs.com/${filename}"
     ;;
   "ubuntu")
     info "Ubuntu platform! Lets get you a DEB..."
     case $platform_version in
-    "12.04") deb_codename="precise" ;;
-    "12.10") deb_codename="quantal" ;;
-    "13.04") deb_codename="raring" ;;
-    "13.10") deb_codename="saucy" ;;
-    "14.04") deb_codename="trusty" ;;
-    "14.10") utopic ;;
-    "15.04") deb_codename="vivid" ;;
-    "15.10") deb_codename="wily" ;;
-    "16.04") deb_codename="xenial" ;;
-    "16.10") deb_codename="yakkety" ;;
-    "17.04") deb_codename="zesty" ;;
     "18.04") deb_codename="bionic" ;;
     "20.04") deb_codename="focal" ;;
-    # "20.10") deb_codename="focal";; ### Skipped
     "22.04") deb_codename="jammy" ;;
     "22.10") deb_codename="kinetic" ;;
     esac
     filetype="deb"
-    filename="puppet6-release-${deb_codename}.deb"
+    filename="puppet8-release-${deb_codename}.deb"
     download_url="http://apt.puppetlabs.com/${filename}"
     ;;
   "mac_os_x")
