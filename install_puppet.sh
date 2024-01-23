@@ -2,46 +2,45 @@
 #
 
 # Set up colours
-if tty -s;then
-    RED=${RED:-$(tput setaf 1)}
-    GREEN=${GREEN:-$(tput setaf 2)}
-    YLW=${YLW:-$(tput setaf 3)}
-    BLUE=${BLUE:-$(tput setaf 4)}
-    RESET=${RESET:-$(tput sgr0)}
+if tty -s; then
+  RED=${RED:-$(tput setaf 1)}
+  GREEN=${GREEN:-$(tput setaf 2)}
+  YLW=${YLW:-$(tput setaf 3)}
+  BLUE=${BLUE:-$(tput setaf 4)}
+  RESET=${RESET:-$(tput sgr0)}
 else
-    RED=
-    GREEN=
-    YLW=
-    BLUE=
-    RESET=
+  RED=
+  GREEN=
+  YLW=
+  BLUE=
+  RESET=
 fi
 
 # Timestamp
-now () {
-    date +'%H:%M:%S %z'
+now() {
+  date +'%H:%M:%S %z'
 }
 
 # Logging functions instead of echo
-log () {
-    echo "${BLUE}`now`${RESET} ${1}"
+log() {
+  echo "${BLUE}$(now)${RESET} ${1}"
 }
 
-info () {
-    log "${GREEN}INFO${RESET}: ${1}"
+info() {
+  log "${GREEN}INFO${RESET}: ${1}"
 }
 
-warn () {
-    log "${YLW}WARN${RESET}: ${1}"
+warn() {
+  log "${YLW}WARN${RESET}: ${1}"
 }
 
-critical () {
-    log "${RED}CRIT${RESET}: ${1}"
+critical() {
+  log "${RED}CRIT${RESET}: ${1}"
 }
 
 # Check whether a command exists - returns 0 if it does, 1 if it does not
 exists() {
-  if command -v $1 >/dev/null 2>&1
-  then
+  if command -v $1 >/dev/null 2>&1; then
     return 0
   else
     return 1
