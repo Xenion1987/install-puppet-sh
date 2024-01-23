@@ -15,17 +15,17 @@ function main() {
   echo "Start of ${FUNCNAME[0]}"
   if [[ -n "${1}" ]]; then
     case "${1}" in
-    5 | 6 | 7)
+    5 | 6 | 7 | 8)
       PUPPET_AGENT_VERSION=${1:-"6"}
       do_install
       ;;
     *)
-      echo -e "\nMissing or wrong option. Need one of 5, 6, 7"
+      echo -e "\nMissing or wrong option. Need one of 5, 6, 7, 8"
       exit 244
       ;;
     esac
   else
-    echo -e "\nMissing or wrong option. Need one of 5, 6, 7"
+    echo -e "\nMissing or wrong option. Need one of 5, 6, 7, 8"
     exit 244
   fi
   echo "End of ${FUNCNAME[0]}"
