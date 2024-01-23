@@ -5,13 +5,16 @@ jobs:
     strategy:
       matrix:
         os: ["ubuntu:latest", "debian:latest", "fedora:latest", "centos:7"]
+        version: [5, 6, 7, 8]
     runs-on: ubuntu-latest
+    container:
+      image: ${{ matrix.os }}
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v2
-    - name: Run install script 
-      run: |  
-        sudo bash ./install_puppet_7_agent.sh
-    - name: Test puppet is installed
-      run: |
-        /opt/puppetlabs/bin/puppet --version
+      - name: Checkout code
+        uses: actions/checkout@v2
+      - name: Run install script
+        run: |
+          sudo bash ./install_puppet_${{ matrix.version }}_agent.sh
+      - name: Test puppet is installed
+        run: |
+          /opt/puppetlabs/bin/puppet --version
