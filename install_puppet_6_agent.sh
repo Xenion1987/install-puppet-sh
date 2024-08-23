@@ -507,8 +507,8 @@ case $platform in
     "9") deb_codename="stretch" ;;
     "10") deb_codename="buster" ;;
     "11") deb_codename="bullseye" ;;
-    "12") deb_codename="bullseye" ;; # Workaround since there is no 'bookworm' package
-    "13") deb_codename="bullseye" ;; # Workaround since there is no 'trixie' package
+    "12") deb_codename="bookworm" ;;
+    "13") deb_codename="bookworm" ;; # Workaround since there is no 'trixie' package
     esac
     filetype="deb"
     filename="puppet6-release-${deb_codename}.deb"
