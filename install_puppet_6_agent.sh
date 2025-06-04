@@ -533,6 +533,7 @@ case $platform in
     # "20.10") deb_codename="focal";; ### Skipped
     "22.04") deb_codename="jammy" ;;
     "22.10") deb_codename="kinetic" ;;
+    "24.04") deb_codename="noble" ;;
     esac
     filetype="deb"
     filename="puppet6-release-${deb_codename}.deb"
